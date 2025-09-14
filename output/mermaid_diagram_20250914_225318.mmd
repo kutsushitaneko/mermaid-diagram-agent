@@ -1,0 +1,22 @@
+
+sequenceDiagram
+    participant User as ユーザー
+    participant App as スマホアプリ
+    participant Backend as バックエンドサーバー
+    participant Embedding as 埋め込みモデル
+    participant VectorDB as ベクトルデータベース
+    participant LLM as 自然言語生成モデル
+    User->>App: 自然言語で問い合わせ
+    App->>Backend: クエリを送信（APIコール）
+    box "ベクトル検索"
+    Backend->>Embedding: クエリテキストを埋め込みベクトルに変換
+    Embedding-->>Backend: 埋め込みベクトルを返す
+    Backend->>VectorDB: ベクトルで社内規定の類似性を検索
+    VectorDB-->>Backend: 類似する社内規定ドキュメントを返す
+    end
+    box "回答生成"
+    Backend->>LLM: 検索結果とクエリを基にプロンプトを作成し、呼び出し
+    LLM-->>Backend: 自然言語での回答を生成して返す
+    end
+    Backend-->>App: 生成された回答を送信
+    App-->>User: 自然言語で回答を表示

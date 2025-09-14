@@ -1,0 +1,8 @@
+smolagents[gradio]
+python-dotenv
+Pillow
+litellm
+ipykernel
+cryptography
+google-genai
+ipywidgets

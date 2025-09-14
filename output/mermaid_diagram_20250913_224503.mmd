@@ -1,0 +1,8 @@
+flowchart TD
+    Start[Start] --> TableComment[Execute SQL: COMMENT ON TABLE CUSTOMERS IS 'Table for storing customer information';]
+    TableComment --> Init[Prepare list of columns and their comments]
+    Init --> Check{Columns remaining?}
+    Check -->|Yes| ColumnComment[Execute SQL: COMMENT ON COLUMN CUSTOMERS.column_name IS 'Appropriate description';
+Example: COMMENT ON COLUMN CUSTOMERS.CUST_ID IS 'Unique customer identifier';]
+    ColumnComment --> Check
+    Check -->|No| End[End]

@@ -1,0 +1,32 @@
+
+sequenceDiagram
+    participant User
+    participant App as Smartphone App
+    participant Backend as Backend System
+    participant Search as Search Engine（Vector DB）
+    participant LLM as Language Model
+
+    User->>App: 自然言語で問い合わせを送信
+    App->>Backend: 問い合わせを転送
+
+    Note over Backend: 類似性検索処理の詳細:
+    Note over Backend: 1. 問い合わせをトークナイズ
+    Note over Backend: 2. 埋め込みモデルでベクトル生成
+    Note over Backend: 3. ベクトルDBにコサイン類似度でクエリ
+    Note over Backend: 4. 上位k件の社内規定ドキュメントを取得
+
+    Backend->>Search: 問い合わせをベクトル化
+    Search-->>Backend: ベクトル埋め込みを返す
+    Backend->>Search: 類似ベクトルを検索（社内規定DB）
+    Search-->>Backend: 上位類似規定を返す
+
+    Note over Backend,LLM: 自然言語回答生成処理の詳細:
+    Note over Backend,LLM: 1. 取得した規定と問い合わせを入力
+    Note over Backend,LLM: 2. LLMにプロンプトで要約/回答生成を指示
+    Note over Backend,LLM: 3. 自然言語の回答を生成
+
+    Backend->>LLM: 問い合わせと規定を入力し、回答生成をリクエスト
+    LLM-->>Backend: 生成された自然言語回答を返す
+
+    Backend->>App: 回答を送信
+    App->>User: 回答を表示

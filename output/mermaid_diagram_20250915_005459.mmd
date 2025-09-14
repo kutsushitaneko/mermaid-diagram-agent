@@ -1,0 +1,13 @@
+
+sequenceDiagram
+    participant User as ユーザー（スマホアプリ）
+    participant AppServer as アプリサーバー
+    participant VectorDB as ベクトルDB（社内規定）
+    participant LLM as LLM（自然言語生成）
+
+    User->>AppServer: 自然言語問い合わせを送信
+    AppServer->>VectorDB: 問い合わせを埋め込み、類似性検索
+    VectorDB->>AppServer: 関連規定ドキュメントを返す
+    AppServer->>LLM: ドキュメントと問い合わせで回答生成を依頼
+    LLM->>AppServer: 生成された自然言語回答を返す
+    AppServer->>User: 自然言語回答を送信

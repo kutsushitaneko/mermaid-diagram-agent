@@ -1,0 +1,68 @@
+---
+description: 
+globs: *.py,*.ipynb
+alwaysApply: false
+---
+# このファイルに書かれているルールを逐語的に必ず画面出力してから対応する。
+# Python 環境
+Python は uv による仮想環境です。テストコードなどは uv run で起動します。
+
+# Gradio アプリケーションのベストプラクティス
+
+## Event Listeners （イベントハンドラー）のパラメータの数の確認
+Event Listener に定義された関数の入出力コンポーネントの数と、Listener に定義された inputsのコンポーネントの数、outputs の **コンポーネントの数が一致することを確実** にしてください。
+
+## Component Properties / Component Configurations の更新
+
+コンポーネントの可視性や見た目などを動的に更新するために、以下の手法を使ってください。
+
+You can do this by returning a component instances instead of a regular return value or update method from your function.
+
+This is most easily illustrated with an example:
+
+```
+import gradio as gr
+
+
+def change_textbox(choice):
+    if choice == "short":
+        return gr.Textbox(lines=2, visible=True)
+    elif choice == "long":
+        return gr.Textbox(lines=8, visible=True)
+    else:
+        return gr.Textbox(visible=False)
+
+
+with gr.Blocks() as block:
+    radio = gr.Radio(
+        ["short", "long", "none"], label="What kind of essay would you like to write?"
+    )
+    text = gr.Textbox(lines=2, interactive=True)
+
+    radio.change(fn=change_textbox, inputs=radio, outputs=text)
+
+    block.launch()
+
+```
+
+## Gradio 一時ディレクトリは他のユーザー、アプリケーションとの衝突をさけるためカレントディレクトリに temp/gradio という名前で作成します。以下はサンプルコードです。
+
+base_temp_dir = os.path.join(os.getcwd(), "temp")
+os.makedirs(base_temp_dir, exist_ok=True)
+
+# Gradio用の一時ディレクトリをカレントディレクトリ内に作成
+gradio_temp_dir = os.path.join(base_temp_dir, "gradio")
+os.makedirs(gradio_temp_dir, exist_ok=True)
+
+try:
+    test_file = os.path.join(gradio_temp_dir, "test_write_permission")
+    with open(test_file, 'w') as f:
+        f.write("test")
+    os.remove(test_file)
+    print(f"✅ Gradio一時ディレクトリの書き込み権限確認完了: {gradio_temp_dir}")
+except Exception as e:
+    print(f"❌ Gradio一時ディレクトリ権限エラー: {e}")
+    raise
+
+os.environ['GRADIO_TEMP_DIR'] = gradio_temp_dir
+print(f"📁 Gradio一時ディレクトリを設定しました: {gradio_temp_dir}")

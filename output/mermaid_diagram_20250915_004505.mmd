@@ -1,0 +1,9 @@
+
+sequenceDiagram
+    participant User as ユーザー（スマホアプリ）
+    participant Server as バックエンドサーバー
+    participant DB as 社内規定DB
+    User->>Server: 自然言語で問い合わせ
+    Server->>DB: 類似性検索クエリ実行
+    DB-->>Server: 検索結果返却
+    Server->>User: 自然言語で回答

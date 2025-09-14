@@ -1,0 +1,13 @@
+
+sequenceDiagram
+    participant User
+    participant App as Mobile App
+    participant Server as Backend Server
+    participant DB as Database
+
+    User->>App: 自然言語で問い合わせを送信
+    App->>Server: クエリを転送
+    Server->>DB: 社内規定を類似性検索
+    DB->>Server: 検索結果を返す
+    Server->>App: 自然言語で回答を生成して返す
+    App->>User: 回答を表示

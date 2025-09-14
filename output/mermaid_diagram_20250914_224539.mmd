@@ -1,0 +1,14 @@
+
+sequenceDiagram
+    participant User as ユーザー
+    participant App as スマホアプリ
+    participant Backend as バックエンド
+    participant DB as 社内規定DB
+
+    User->>App: 自然言語で問い合わせ
+    App->>Backend: 問い合わせ転送
+    Backend->>DB: 類似性検索実行
+    DB-->>Backend: 検索結果返却
+    Backend->>Backend: 自然言語応答生成
+    Backend-->>App: 応答送信
+    App-->>User: 応答表示

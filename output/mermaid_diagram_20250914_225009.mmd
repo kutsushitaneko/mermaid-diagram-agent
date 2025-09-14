@@ -1,0 +1,15 @@
+
+sequenceDiagram
+    participant User as ユーザー
+    participant App as スマホアプリ
+    participant Backend as バックエンドサーバー
+    participant Search as 類似性検索システム
+    participant LLM as 自然言語生成モデル
+    User->>App: 自然言語で問い合わせ
+    App->>Backend: クエリを送信（APIコール）
+    Backend->>Search: クエリを埋め込み、類似性検索
+    Search-->>Backend: 類似する社内規定を返す
+    Backend->>LLM: 結果に基づいて自然言語応答を生成
+    LLM-->>Backend: 応答を返す
+    Backend-->>App: 応答を送信
+    App-->>User: 自然言語で回答を表示

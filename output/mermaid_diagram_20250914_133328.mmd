@@ -1,0 +1,25 @@
+
+sequenceDiagram
+    participant User as User（スマホアプリ）
+    participant AppServer as App Server
+    participant Embedding as Embedding Model
+    participant VectorDB as Vector DB（社内規定ベクトル）
+    participant LLM as LLM（自然言語生成）
+
+    User->>AppServer: 自然言語で問い合わせ送信（例: "有給休暇の規定は？"）
+
+    rect rgb(191, 223, 255)
+    note over AppServer: 類似性検索のための具体的な処理
+    AppServer->>Embedding: 問い合わせテキストを埋め込みベクトルに変換
+    Embedding->>AppServer: ベクトル返却
+    AppServer->>VectorDB: ベクトルで類似ドキュメント検索（コサイン類似度など）
+    VectorDB->>AppServer: 類似社内規定ドキュメント返却（トップK件）
+    end
+
+    rect rgb(191, 255, 191)
+    note over AppServer: 自然言語で回答を生成する処理
+    AppServer->>LLM: プロンプト送信（問い合わせ + 類似ドキュメントを基に自然言語回答生成）
+    LLM->>AppServer: 生成された自然言語回答返却
+    end
+
+    AppServer->>User: 自然言語回答を返却

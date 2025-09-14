@@ -1,0 +1,10 @@
+erDiagram
+    IMAGES {
+        NUMBER image_id PK
+        VARCHAR2（255） file_name 
+        VARCHAR2（4000） caption 
+        VECTOR caption_embedding 
+        BLOB image_data "NOT NULL"
+        VECTOR（1536） image_embedding 
+        TIMESTAMP upload_date 
+    }

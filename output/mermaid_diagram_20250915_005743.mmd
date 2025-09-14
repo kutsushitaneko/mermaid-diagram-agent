@@ -1,0 +1,17 @@
+
+sequenceDiagram
+    participant User as ユーザー（スマホアプリ）
+    participant AppServer as アプリサーバー
+    participant EmbeddingModel as 埋め込みモデル
+    participant VectorDB as ベクトルDB（社内規定）
+    participant LLM as LLM（自然言語生成）
+
+    User->>AppServer: 自然言語問い合わせを送信
+    AppServer->>EmbeddingModel: 問い合わせテキストを送信して埋め込みベクトルを生成
+    EmbeddingModel->>AppServer: 問い合わせの埋め込みベクトルを返す
+    AppServer->>VectorDB: 埋め込みベクトルを使って類似性検索を実行（例: cosine similarity）
+    VectorDB->>AppServer: 類似度の高い社内規定ドキュメントを返す
+    AppServer->>LLM: ドキュメントと問い合わせをプロンプトとして送信し、
+自然言語回答を生成依頼（例: 要約や説明生成）
+    LLM->>AppServer: 生成された自然言語回答を返す（例: コンテキストに基づく応答）
+    AppServer->>User: 自然言語回答を送信
