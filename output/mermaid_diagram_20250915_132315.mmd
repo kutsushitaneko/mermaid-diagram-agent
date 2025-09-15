@@ -1,0 +1,21 @@
+erDiagram
+    CHANNELS { }
+    COSTS { }
+    COUNTRIES { }
+    CUSTOMERS { }
+    PRODUCTS { }
+    PROMOTIONS { }
+    SALES { }
+    SUPPLEMENTARY_DEMOGRAPHICS { }
+    TIMES { }
+    TIMES ||--o{ COSTS : "TIME_ID references TIME_ID"
+    CHANNELS ||--o{ COSTS : "CHANNEL_ID references CHANNEL_ID"
+    PRODUCTS ||--o{ COSTS : "PROD_ID references PROD_ID"
+    PROMOTIONS ||--o{ COSTS : "PROMO_ID references PROMO_ID"
+    COUNTRIES ||--o{ CUSTOMERS : "COUNTRY_ID references COUNTRY_ID"
+    PRODUCTS ||--o{ SALES : "PROD_ID references PROD_ID"
+    PROMOTIONS ||--o{ SALES : "PROMO_ID references PROMO_ID"
+    TIMES ||--o{ SALES : "TIME_ID references TIME_ID"
+    CHANNELS ||--o{ SALES : "CHANNEL_ID references CHANNEL_ID"
+    CUSTOMERS ||--o{ SALES : "CUST_ID references CUST_ID"
+    CUSTOMERS ||--o{ SUPPLEMENTARY_DEMOGRAPHICS : "CUST_ID references CUST_ID (logical)"
