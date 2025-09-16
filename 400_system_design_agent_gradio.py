@@ -5,7 +5,7 @@ from PIL import Image
 import subprocess
 import shutil
 from dotenv import load_dotenv
-from smolagents import CodeAgent, LiteLLMModel, tool
+from smolagents import CodeAgent, LiteLLMModel, tool, REMOVE_PARAMETER
 import gradio as gr
 
 load_dotenv()
@@ -25,6 +25,7 @@ model = LiteLLMModel(
     oci_tenancy=os.getenv("OCI_TENANCY"),                  # Tenancy OCID
     oci_key=os.getenv("OCI_KEY"),                          # Private key content
     oci_compartment_id=os.getenv("OCI_COMPARTMENT_ID"),    # Compartment OCID
+    stop=REMOVE_PARAMETER, 
     temperature=0.0,
     max_tokens= 10000,
     drop_params=True

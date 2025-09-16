@@ -3,5 +3,6 @@
 old/
 test/
 docs/
+output/
 *.log
 memo.txt
