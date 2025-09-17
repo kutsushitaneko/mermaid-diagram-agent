@@ -146,7 +146,8 @@ sqlcl_server_parameters = StdioServerParameters(
     args=["-mcp"],
 )
 sqlcl_mcp_client = MCPClient(
-    server_parameters=sqlcl_server_parameters
+    server_parameters=sqlcl_server_parameters,
+    structured_output=False
 )
 sqlcl_tools = sqlcl_mcp_client.get_tools()
 
