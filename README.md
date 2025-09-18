@@ -48,11 +48,19 @@ pip install -U pip
 pip install -r requirements.txt
 ```
 
-4) smolagentsライブラリ最新版をGitHubからインストール（[issue #1765](https://github.com/huggingface/smolagents/issues/1765) 対策）
-```bash
+4) smolagentsライブラリ最新版をGitHubからインストール（[issue #1765](https://github.com/huggingface/smolagents/issues/1765) 対策の[PR #1766](https://github.com/huggingface/smolagents/pull/1766) がマージされている最新版（1.22.0.dev0 以上）をインストール）
+```bash:GitHub から直接インストール
 pip install -U "smolagents[litellm,toolkit,gradio,mcp]@git+https://github.com/huggingface/smolagents.git"
-
 ```
+```bash:インストールされたバージョンの確認例
+$ pip show smolagents
+Name: smolagents
+Version: 1.22.0.dev0
+Location: H:\lab\smolagents\mermaid-diagram-agent\.venv\Lib\site-packages
+Requires: huggingface-hub, jinja2, pillow, python-dotenv, requests, rich
+Required-by:
+```
+Versions が 1.22.0.dev0 以上となっていれば OK です。
 
 5) Mermaid CLI（mmdc）のインストール
 ```bash
